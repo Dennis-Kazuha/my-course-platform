@@ -1,35 +1,34 @@
-import * as admin from "firebase-admin";
-import * as fs from "fs";
-import * as path from "path";
+import "dotenv/config";
+import { initializeApp, getApps, cert, applicationDefault } from "firebase-admin/app";
+import { getFirestore } from "firebase-admin/firestore";
 
 /**
  * Firebase Seed Script
  * Populates Firestore with initial course data
  *
  * Usage:
- *   npx ts-node scripts/seed-firebase.ts
+ *   pnpm db:seed
  *
  * Environment Variables:
  *   FIREBASE_PROJECT_ID - Firebase project ID
- *   FIREBASE_SERVICE_ACCOUNT_KEY - Path to service account JSON file (optional)
+ *   FIREBASE_SERVICE_ACCOUNT_KEY - JSON string of service account credentials
  */
 
 // Initialize Firebase Admin SDK
-if (!admin.apps.length) {
-  const serviceAccountKeyPath = process.env.FIREBASE_SERVICE_ACCOUNT_KEY;
-  const serviceAccount = serviceAccountKeyPath
-    ? JSON.parse(fs.readFileSync(serviceAccountKeyPath, "utf-8"))
+if (!getApps().length) {
+  const serviceAccountKey = process.env.FIREBASE_SERVICE_ACCOUNT_KEY
+    ? JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT_KEY)
     : undefined;
 
-  admin.initializeApp({
-    credential: serviceAccount
-      ? admin.credential.cert(serviceAccount)
-      : admin.credential.applicationDefault(),
+  initializeApp({
+    credential: serviceAccountKey
+      ? cert(serviceAccountKey)
+      : applicationDefault(),
     projectId: process.env.FIREBASE_PROJECT_ID,
   });
 }
 
-const db = admin.firestore();
+const db = getFirestore();
 
 // ============================================================================
 // SEED DATA

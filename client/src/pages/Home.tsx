@@ -62,7 +62,7 @@ export default function Home() {
                 <BookOpen className="w-4 h-4" />
                 <span>5 Modules • 10 Lessons</span>
               </div>
-              <Link href="/course/demo/lesson/1">
+              <Link href="/course/Wx6qc5w542tUts47RFce/lesson/crDmlQzYZBwSvoc7i9v5">
                 <Button className="w-full">Start Learning</Button>
               </Link>
             </CardContent>
