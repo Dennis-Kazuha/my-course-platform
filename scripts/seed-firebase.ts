@@ -165,14 +165,16 @@ async function seedFirebase() {
     console.log();
 
     // Create lessons for each chapter
+    // ⚠️ 重要：請將 videoId 替換成你在 Bunny Stream 後台的真實影片 ID
+    // 例如：videoId: "a1b2c3d4-e5f6-7890-abcd-ef1234567890"
     console.log("🎬 Creating lessons...");
     const lessons = [
       {
         chapterId: chapterIds[0],
         title: "What is Generative AI?",
         description: "Understanding the basics of generative AI",
-        videoId: "cf-video-genai-001",
-        duration: 600,
+        videoId: "f55e7a5b-8f43-4fc3-a994-9a2f34db12d5",
+        duration: 70, // 影片長度（秒）
         order: 1,
       },
       {
@@ -262,90 +264,91 @@ async function seedFirebase() {
     console.log();
 
     // Create transcripts for the first lesson
+    // 時間單位為毫秒 (milliseconds)
     console.log("📝 Creating transcripts...");
     const transcriptSegments = [
       {
         startTime: 0,
-        endTime: 30000,
-        text: "Welcome to Achieve More With GenAI. In this course, you'll learn how to leverage generative AI to boost your productivity and achieve more in less time.",
+        endTime: 7000,
+        text: "It is now starting my day at like 30 miles an hour instead of zero.",
         speaker: "Instructor",
         order: 1,
       },
       {
-        startTime: 30000,
-        endTime: 60000,
-        text: "Generative AI is a type of artificial intelligence that can create new content based on patterns it has learned from training data. This includes text, images, code, and more.",
+        startTime: 7000,
+        endTime: 12000,
+        text: "Whatever you're best at, you're probably better than AI.",
         speaker: "Instructor",
         order: 2,
       },
       {
-        startTime: 60000,
-        endTime: 90000,
-        text: "The key difference between generative AI and traditional machine learning is that generative models can produce entirely new outputs, not just classify or predict existing data.",
+        startTime: 12000,
+        endTime: 20000,
+        text: "So how do we use AI to help you with the other aspects of your job? Lots of the stuff AI is good at is the stuff you hate the most.",
         speaker: "Instructor",
         order: 3,
       },
       {
-        startTime: 90000,
-        endTime: 120000,
-        text: "Common applications include chatbots, content creation, code generation, and creative tools.",
+        startTime: 20000,
+        endTime: 26000,
+        text: "Managing your grocery list, your workout plan. Plan a trip to Hawaii. The AI will do that for you. Cool, finished, next task.",
         speaker: "Instructor",
         order: 4,
       },
       {
-        startTime: 120000,
-        endTime: 180000,
-        text: "There are many AI tools available today. Some popular ones include ChatGPT, Claude, Gemini, and Copilot.",
+        startTime: 26000,
+        endTime: 37000,
+        text: "If you want creative work, then you want the AI to hallucinate. Whoa, didn't think of that.",
         speaker: "Instructor",
         order: 5,
       },
       {
-        startTime: 180000,
-        endTime: 240000,
-        text: "Each tool has its own strengths and weaknesses. ChatGPT is great for general-purpose tasks, while specialized tools might be better for specific domains.",
+        startTime: 37000,
+        endTime: 44000,
+        text: "We are actually going to generate a business plan. Five business ideas, 20 creative names. I could have done it at two o'clock in the morning. You do not have to be a coder.",
         speaker: "Instructor",
         order: 6,
       },
       {
-        startTime: 240000,
-        endTime: 300000,
-        text: "To get started, you'll need to create an account on your chosen platform and familiarize yourself with the interface.",
+        startTime: 44000,
+        endTime: 59000,
+        text: "My boss will make me cry if you don't answer. I'm not advocating that you threaten your AI bestie, but you got to do what you need to do to get it done.",
         speaker: "Instructor",
         order: 7,
       },
       {
-        startTime: 300000,
-        endTime: 360000,
-        text: "The quality of your prompts directly affects the quality of AI outputs. A good prompt is clear, specific, and provides context.",
+        startTime: 59000,
+        endTime: 63000,
+        text: "We're now in the AI age. Let's buckle down and figure out what that means today.",
         speaker: "Instructor",
         order: 8,
       },
       {
-        startTime: 360000,
-        endTime: 420000,
-        text: "Instead of asking 'Write a blog post', try 'Write a 500-word blog post about productivity tips for remote workers, targeting beginners'.",
-        speaker: "Instructor",
+        startTime: 63000,
+        endTime: 64000,
+        text: "I'm Manuel Sensini.",
+        speaker: "Manuel Sensini",
         order: 9,
       },
       {
-        startTime: 420000,
-        endTime: 480000,
-        text: "You should also provide examples of the style or format you want. This helps the AI understand your expectations better.",
-        speaker: "Instructor",
+        startTime: 64000,
+        endTime: 65000,
+        text: "I'm Don Allen III.",
+        speaker: "Don Allen III",
         order: 10,
       },
       {
-        startTime: 480000,
-        endTime: 540000,
-        text: "Once you're comfortable with basic prompting, you can explore more advanced techniques like few-shot prompting, chain-of-thought reasoning, and prompt chaining.",
-        speaker: "Instructor",
+        startTime: 65000,
+        endTime: 66000,
+        text: "I'm Allie K. Miller.",
+        speaker: "Allie K. Miller",
         order: 11,
       },
       {
-        startTime: 540000,
-        endTime: 600000,
-        text: "Thank you for taking this course. We hope you found it valuable!",
-        speaker: "Instructor",
+        startTime: 66000,
+        endTime: 70000,
+        text: "I'm Ethan Mollick, and this is MasterClass.",
+        speaker: "Ethan Mollick",
         order: 12,
       },
     ];

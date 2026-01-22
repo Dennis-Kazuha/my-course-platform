@@ -86,15 +86,15 @@ export const ChatInterface: React.FC<ChatInterfaceProps> = ({
   };
 
   return (
-    <div className="h-full flex flex-col bg-white rounded-lg border border-gray-200">
+    <div className="h-full flex flex-col bg-white rounded-lg border border-gray-200 overflow-hidden">
       {/* Header */}
-      <div className="px-4 py-3 border-b border-gray-200 bg-gradient-to-r from-blue-50 to-indigo-50">
+      <div className="flex-shrink-0 px-4 py-3 border-b border-gray-200 bg-gradient-to-r from-blue-50 to-indigo-50">
         <h3 className="font-semibold text-gray-900">AI Tutor</h3>
         <p className="text-xs text-gray-600 mt-1">Ask questions about this lesson</p>
       </div>
 
       {/* Messages */}
-      <ScrollArea className="flex-1">
+      <ScrollArea className="flex-1 min-h-0">
         <div className="p-4 space-y-4">
           {messages.length === 0 ? (
             <div className="text-center py-8 text-gray-500">
@@ -166,7 +166,7 @@ export const ChatInterface: React.FC<ChatInterfaceProps> = ({
       </ScrollArea>
 
       {/* Input */}
-      <form onSubmit={handleSendMessage} className="p-4 border-t border-gray-200 bg-gray-50">
+      <form onSubmit={handleSendMessage} className="flex-shrink-0 p-4 border-t border-gray-200 bg-gray-50">
         <div className="flex gap-2">
           <Input
             value={input}

@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Copy, Check } from "lucide-react";
+import { formatTime } from "@/lib/bunny";
 
 interface TranscriptSegment {
   id: number;
@@ -47,13 +48,6 @@ export const TranscriptView: React.FC<TranscriptViewProps> = ({
     }
   }, [currentTime, segments]);
 
-  const formatTime = (ms: number): string => {
-    const totalSeconds = Math.floor(ms / 1000);
-    const minutes = Math.floor(totalSeconds / 60);
-    const seconds = totalSeconds % 60;
-    return `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
-  };
-
   const handleCopy = (text: string, id: number) => {
     navigator.clipboard.writeText(text);
     setCopiedId(id);
@@ -61,13 +55,13 @@ export const TranscriptView: React.FC<TranscriptViewProps> = ({
   };
 
   return (
-    <div className="h-full flex flex-col bg-white rounded-lg border border-gray-200">
-      <div className="px-4 py-3 border-b border-gray-200 bg-gray-50">
+    <div className="h-full flex flex-col bg-white rounded-lg border border-gray-200 overflow-hidden">
+      <div className="flex-shrink-0 px-4 py-3 border-b border-gray-200 bg-gray-50">
         <h3 className="font-semibold text-gray-900">Transcript</h3>
         <p className="text-xs text-gray-500 mt-1">Click on any segment to jump to that time</p>
       </div>
 
-      <ScrollArea className="flex-1" ref={scrollAreaRef}>
+      <ScrollArea className="flex-1 min-h-0" ref={scrollAreaRef}>
         <div className="p-4 space-y-3">
           {segments.length === 0 ? (
             <div className="text-center py-8">

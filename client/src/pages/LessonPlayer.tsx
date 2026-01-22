@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useRoute } from "wouter";
 import { Loader2, AlertCircle } from "lucide-react";
 import { VideoPlayer } from "@/components/VideoPlayer";
@@ -28,6 +28,9 @@ export default function LessonPlayer() {
   const [currentTime, setCurrentTime] = useState(0);
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const [selectedLessonId, setSelectedLessonId] = useState<string | undefined>(lessonId ?? undefined);
+  
+  // ★ 新增：VideoPlayer ref 用於控制影片跳轉
+  const videoPlayerRef = useRef<{ seekTo: (ms: number) => void }>(null);
 
   // Fetch course with chapters and lessons
   const { data: courseData, isLoading: courseLoading, error: courseError } = trpc.course.getCourse.useQuery(
@@ -164,14 +167,15 @@ export default function LessonPlayer() {
           <p className="text-sm text-gray-600 mt-1">{courseData?.title}</p>
         </div>
 
-        {/* Content Grid */}
-        <div className="flex-1 overflow-hidden">
-          <div className="grid grid-cols-3 gap-4 h-full p-6">
-            {/* Left: Video + Transcript */}
-            <div className="col-span-2 flex flex-col gap-4 min-w-0">
-              {/* Video Player */}
-              <div className="flex-1 min-h-0">
+        {/* Content Area */}
+        <div className="flex-1 overflow-hidden p-4">
+          <div className="flex gap-4 h-full">
+            {/* Left: Video + Transcript (2/3 寬度) */}
+            <div className="flex-[2] flex flex-col gap-4 min-w-0 h-full">
+              {/* Video Player - 60% 高度 */}
+              <div className="h-[60%] min-h-0">
                 <VideoPlayer
+                  ref={videoPlayerRef}
                   videoId={lessonData?.videoId || ""}
                   title={lessonData?.title}
                   duration={lessonData?.duration || 0}
@@ -180,28 +184,24 @@ export default function LessonPlayer() {
                 />
               </div>
 
-              {/* Transcript */}
-              <div className="flex-1 min-h-0">
-              <TranscriptView
-                segments={(lessonData?.transcripts || []).map((t: any) => ({
-                  ...t,
-                  speaker: t.speaker || undefined,
-                }))}
-                currentTime={currentTime}
-                onSeek={(timeMs) => {
+              {/* Transcript - 40% 高度 */}
+              <div className="h-[40%] min-h-0">
+                <TranscriptView
+                  segments={(lessonData?.transcripts || []).map((t: any) => ({
+                    ...t,
+                    speaker: t.speaker || undefined,
+                  }))}
+                  currentTime={currentTime}
+                  onSeek={(timeMs) => {
                     setCurrentTime(timeMs);
-                    // Seek video to this time
-                    const videoElement = document.querySelector("video");
-                    if (videoElement) {
-                      videoElement.currentTime = timeMs / 1000;
-                    }
+                    videoPlayerRef.current?.seekTo(timeMs);
                   }}
                 />
               </div>
             </div>
 
-            {/* Right: Chat */}
-            <div className="flex flex-col min-w-0">
+            {/* Right: Chat (1/3 寬度) */}
+            <div className="flex-1 min-w-0 h-full">
               <ChatInterface
                 lessonId={selectedLessonId || ""}
                 onSendMessage={handleSendMessage}
